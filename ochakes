@@ -1,0 +1,23 @@
+server {
+  listen  80;
+  server_name www.ochakes.com ochakes.com;
+  return 301 https://ochakes.com$request_uri;
+}
+
+server {
+  listen 443 ssl;
+  server_name  ochakes.com;
+  access_log  /var/log/nginx/ochakes.access.log;
+  error_log  /var/log/nginx/ochakes.error.log;
+  ssl_certificate /etc/letsencrypt/live/christopherpatrouch.com/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/christopherpatrouch.com/privkey.pem;
+
+  location  / {
+    root  /var/www/ochakes;
+    index  index.html index.htm;
+  }
+
+location ~ /.well-known {
+                allow all;
+        }
+}

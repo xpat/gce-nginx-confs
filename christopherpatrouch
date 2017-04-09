@@ -1,0 +1,26 @@
+server {
+  listen  80;
+  server_name christopherpatrouch.com www.christopherpatrouch.com;
+  return 301 https://christopherpatrouch.com$request_uri;
+}
+
+server {
+  listen 443 ssl;
+  server_name  christopherpatrouch.com;
+  access_log  /var/log/nginx/christopherpatrouch.access.log;
+  error_log  /var/log/nginx/christopherpatrouch.error.log;    
+  ssl_certificate /etc/letsencrypt/live/christopherpatrouch.com/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/christopherpatrouch.com/privkey.pem;
+
+  location  / {
+    root  /var/www/christopherpatrouch;
+    index  index.html index.htm;
+  }
+
+location ~ /.well-known{
+                allow all;
+        }
+}
+
+
+

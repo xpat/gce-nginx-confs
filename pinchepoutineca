@@ -1,0 +1,23 @@
+server {
+  listen  80;
+  server_name  www.pinchepoutine.ca pinchepoutine.ca;
+  return 301 https://pinchepoutine.ca$request_uri;
+}
+
+server {
+  listen 443 ssl;
+  server_name pinchepoutine.ca;
+  access_log  /var/log/nginx/pinchepoutineca.access.log;
+  error_log  /var/log/nginx/pinchepoutineca.error.log;
+  ssl_certificate /etc/letsencrypt/live/christopherpatrouch.com/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/christopherpatrouch.com/privkey.pem;
+
+  location  / {
+    root  /var/www/pinchepoutineca;
+    index  index.html index.htm;
+  }
+
+location ~ /.well-known {
+		allow all;
+	}
+}
