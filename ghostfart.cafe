@@ -1,0 +1,38 @@
+server {
+    server_name ghostfart.cafe www.ghostfart.cafe;
+  access_log  /var/log/nginx/ghostfart.cafe.access.log;
+  error_log  /var/log/nginx/ghostfart.cafe.error.log;
+  location  / {
+    root /var/www/ghostfart.cafe;
+     index  index.html index.htm;
+}
+
+
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/ghostfart.cafe/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/ghostfart.cafe/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+
+}
+server {
+    if ($host = www.ghostfart.cafe) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = ghostfart.cafe) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    server_name ghostfart.cafe www.ghostfart.cafe;
+    listen 80;
+    return 404; # managed by Certbot
+
+
+
+
+}

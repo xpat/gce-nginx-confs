@@ -1,23 +1,31 @@
 server {
-  listen  80;
-  server_name  www.urbnv.com urbnv.com;
-  return 301 https://urbnv.com$request_uri;
+    root /var/www/urbnv;
+    index index.html;
+    server_name urbnv.com www.urbnv.com;
+    access_log  /var/log/nginx/urbnv.access.log;
+     error_log  /var/log/nginx/urbnv.error.log;
+
+    #listen [::]:443 ssl ipv6only=on; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/urbnv.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/urbnv.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 }
 
 server {
-  listen 443 ssl;
-  server_name urbnv.com;
-  access_log  /var/log/nginx/urbnv.access.log;
-  error_log  /var/log/nginx/urbnv.error.log;
-  ssl_certificate /etc/letsencrypt/live/christopherpatrouch.com/fullchain.pem;
-  ssl_certificate_key /etc/letsencrypt/live/christopherpatrouch.com/privkey.pem;
+    if ($host = urbnv.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
 
-  location  / {
-    root  /var/www/urbnv;
-    index  index.html index.htm;
-  }
 
-location ~ /.well-known {
-		allow all;
-	}
+    if ($host = www.urbnv.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+    server_name urbnv.com www.urbnv.com;
+    listen 80;
+    listen [::]:80;
+    return 404; # managed by Certbot
 }
+

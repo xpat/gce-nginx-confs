@@ -1,9 +1,7 @@
 server {
-    root /var/www/pinchepoutinemx/wpwebsite;
+    root /var/www/lexifer.technolovingcare.com/wpwebsite;
     index  index.php index.html index.htm;
-    server_name  pinchepoutine.mx www.pinchepoutine.mx;
-    access_log /var/log/nginx/pinchepoutine.mx.access.log;
-    error_log /var/log/nginx/pinchepoutine.mx.error.log;
+    server_name  lexifer.technolovingcare.com;
 
     client_max_body_size 500M;
 
@@ -29,37 +27,29 @@ server {
 
     location ~ \.php$ {
          include snippets/fastcgi-php.conf;
-         fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+         fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
          fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
          include fastcgi_params;
     }
 
-    listen [::]:443 ssl; # managed by Certbot
+    listen [::]:443 ssl ipv6only=on; # managed by Certbot
     listen 443 ssl; # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/pinchepoutine.mx/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/pinchepoutine.mx/privkey.pem; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/lexifer.technolovingcare.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/lexifer.technolovingcare.com/privkey.pem; # managed by Certbot
     include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 
-
 }
 server {
-    if ($host = pinchepoutine.mx) {
-        return 301 https://$host$request_uri;
-    } # managed by Certbot
-
-
-    if ($host = www.pinchepoutine.mx) {
+    if ($host = lexifer.technolovingcare.com) {
         return 301 https://$host$request_uri;
     } # managed by Certbot
 
 
     listen 80;
     listen [::]:80;
-    server_name  pinchepoutine.mx www.pinchepoutine.mx;
+    server_name  lexifer.technolovingcare.com;
     return 404; # managed by Certbot
-
-
 
 
 }

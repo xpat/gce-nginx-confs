@@ -1,14 +1,14 @@
-upstream urbaninversion.com {
-    server 127.0.0.1:3005;
+upstream happyhobbit.dev {
+    server 127.0.0.1:3000;
     keepalive 64;
 }
 
 server {
-    server_name urbaninversion.com www.urbaninversion.com;
-    root /var/www/urbaninversion.com/sveltekitprod/build;
+    server_name happyhobbit.dev www.happyhobbit.dev;
+    root /var/www/happyhobbit.dev/sveltekitprod/build;
            index index.js index.html index.htm;
-    access_log  /var/log/nginx/urbaninversion.com.access.log;
-    error_log  /var/log/nginx/urbaninversion.com.error.log;
+    access_log  /var/log/nginx/happyhobbit.dev.access.log;
+    error_log  /var/log/nginx/happyhobbit.dev.error.log;
 
     location  / {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -19,20 +19,16 @@ server {
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
 
-        proxy_pass http://urbaninversion.com;
+        proxy_pass http://happyhobbit.dev;
         proxy_redirect off;
     	proxy_read_timeout 240s;
         #proxy_cache_bypass $http_upgrade;
     }
 
 
-
-
-
-
     listen 443 ssl; # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/urbaninversion/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/urbaninversion/privkey.pem; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/www.happyhobbit.dev/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/www.happyhobbit.dev/privkey.pem; # managed by Certbot
     include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 
@@ -41,17 +37,17 @@ server {
 
 
 server {
-    if ($host = www.urbaninversion.com) {
+    if ($host = www.happyhobbit.dev) {
         return 301 https://$host$request_uri;
     } # managed by Certbot
 
 
-    if ($host = urbaninversion.com) {
+    if ($host = happyhobbit.dev) {
         return 301 https://$host$request_uri;
     } # managed by Certbot
 
 
-    server_name urbaninversion.com www.urbaninversion.com;
+    server_name happyhobbit.dev www.happyhobbit.dev;
     listen 80;
     return 404; # managed by Certbot
 

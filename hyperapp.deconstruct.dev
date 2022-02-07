@@ -1,0 +1,30 @@
+server {
+    root /var/www/hyperapp.deconstruct.dev;
+    index index.html index.htm;
+    server_name  hyperapp.deconstruct.dev;
+    access_log /var/log/nginx/hyperapp.deconstruct.dev.access.log;
+    error_log /var/log/nginx/hyperapp.deconstruct.dev.error.log;
+
+# HSTS (ngx_http_headers_module is required) (63072000 seconds)
+    add_header Strict-Transport-Security "max-age=63072000" always;
+
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/hyperapp.deconstruct.dev/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/hyperapp.deconstruct.dev/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+server {
+    if ($host = hyperapp.deconstruct.dev) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    server_name  hyperapp.deconstruct.dev;
+    listen 80;
+    return 404; # managed by Certbot
+
+
+}

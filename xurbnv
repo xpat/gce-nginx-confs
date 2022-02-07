@@ -1,21 +1,22 @@
 server {
   listen  80;
-  server_name  patraldo.com www.patraldo.com;
-  return 301 https://patraldo.com$request_uri;
+  server_name  www.urbnv.com urbnv.com;
+  return 301 https://urbnv.com$request_uri;
 }
 
 server {
   listen 443 ssl;
-  server_name patraldo.com;
-  access_log  /var/log/nginx/patraldo.access.log;
-  error_log  /var/log/nginx/patraldo.error.log;
+  server_name urbnv.com;
+  access_log  /var/log/nginx/urbnv.access.log;
+  error_log  /var/log/nginx/urbnv.error.log;
   ssl_certificate /etc/letsencrypt/live/christopherpatrouch.com/fullchain.pem;
   ssl_certificate_key /etc/letsencrypt/live/christopherpatrouch.com/privkey.pem;
 
-location  / {
-    root  /var/www/patraldo;
+  location  / {
+    root  /var/www/urbnv;
     index  index.html index.htm;
   }
+
 location ~ /.well-known {
 		allow all;
 	}

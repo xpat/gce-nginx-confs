@@ -1,9 +1,9 @@
 server {
-    root /var/www/pinchepoutinemx/wpwebsite;
+    root /var/www/plantas.patraldo.com/wpwebsite;
+    server_name plantas.patraldo.com www.plantas.patraldo.com;
     index  index.php index.html index.htm;
-    server_name  pinchepoutine.mx www.pinchepoutine.mx;
-    access_log /var/log/nginx/pinchepoutine.mx.access.log;
-    error_log /var/log/nginx/pinchepoutine.mx.error.log;
+    access_log  /var/log/nginx/plantas.patraldo.com.access.log;
+    error_log  /var/log/nginx/plantas.patraldo.com.error.log;
 
     client_max_body_size 500M;
 
@@ -36,30 +36,23 @@ server {
 
     listen [::]:443 ssl; # managed by Certbot
     listen 443 ssl; # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/pinchepoutine.mx/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/pinchepoutine.mx/privkey.pem; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/plantas.patraldo.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/plantas.patraldo.com/privkey.pem; # managed by Certbot
     include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 
-
 }
+
 server {
-    if ($host = pinchepoutine.mx) {
-        return 301 https://$host$request_uri;
-    } # managed by Certbot
-
-
-    if ($host = www.pinchepoutine.mx) {
+    if ($host = plantas.patraldo.com) {
         return 301 https://$host$request_uri;
     } # managed by Certbot
 
 
     listen 80;
     listen [::]:80;
-    server_name  pinchepoutine.mx www.pinchepoutine.mx;
+    server_name plantas.patraldo.com www.plantas.patraldo.com;
     return 404; # managed by Certbot
-
-
 
 
 }

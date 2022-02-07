@@ -1,0 +1,38 @@
+server {
+    server_name hijacked.media www.hijacked.media;
+    access_log  /var/log/nginx/hijacked.media.access.log;
+    error_log  /var/log/nginx/hijacked.media.error.log;
+    location  / {
+    root /var/www/hijacked.media/export;
+     index  index.html index.htm;
+}
+
+
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/hijacked.media/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/hijacked.media/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+
+}
+server {
+    if ($host = www.hijacked.media) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = hijacked.media) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    server_name hijacked.media www.hijacked.media;
+    listen 80;
+    return 404; # managed by Certbot
+
+
+
+
+}
